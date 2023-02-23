@@ -1,41 +1,40 @@
 #include <stdio.h>
 
 /**
- * main - print 1 to 100, except certain multiples
+ * main - Fizz Buzz code
  *
- * Description: prints numbers 1 - 100, if number
- * is multiple of 3 print "Fizz" instead, if number 
- * is multiple of 5 print "Buzz" instead, if number 
- * is multiple of 3 and 5 print "FizzBuzz"
- * Return: 0 on Success
+ * Return: void
  */
+
 int main(void)
 {
-	int i = 2, j = 1;
+	int i = 1;
 
-	printf("%d", j);
-
-	while (i < 101)
-
+	while (i <= 100)
 	{
 		if (i % 3 == 0 && i % 5 == 0)
-		{	
+		{
 			printf("FizzBuzz");
-		}	
+		}
 		else if (i % 3 == 0)
-		{	
+		{
 			printf("Fizz");
-		}	
+		}
 		else if (i % 5 == 0)
-		{	
+		{
 			printf("Buzz");
-		}	
+		}
 		else
-		{	
-			printf("%d", i);
-		}	
+		{
+			printf("%i", i);
+		}
+		if (i != 100)
+		{
+			putchar(' ');
+		}
+
 		i++;
 	}
-	printf("\n");
+	putchar('\n');
 	return (0);
 }
