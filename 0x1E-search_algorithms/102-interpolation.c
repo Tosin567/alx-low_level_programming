@@ -1,37 +1,45 @@
 #include "search_algos.h"
+#include <stdio.h>
 
-/**
- * interpolation_search - Searches a value in a sorted array using \
- * an interpolation search.
- * @array: The array to search in.
- * @size: The length of the array.
- * @value: The value to look for.
- *
- * Return: The first index of the value in the array, otherwise -1.
- */
-int interpolation_search(int *array, size_t size, int value)
-{
-	size_t low = 0, high = size - 1, pos = 0;
-	double tmp;
+int interpolation_search(int *array, size_t size, int value) {
+    if (array == NULL || size == 0) {
+        return -1;  // Return -1 for invalid input
+    }
 
-	if (!array)
-		return (-1);
-	while (array[high] != array[low])
-	{
-		tmp = (double)(high - low) / (array[high] - array[low]);
-		pos = low + (tmp * (value - array[low]));
-		if (pos >= size)
-		{
-			printf("Value checked array[%d] is out of range\n", (int)pos);
-			break;
-		}
-		printf("Value checked array[%d] = [%d]\n", (int)pos, array[pos]);
-		if (array[pos] == value)
-			return (pos);
-		else if (array[pos] < value)
-			low = pos + 1;
-		else
-			high = pos - 1;
-	}
-	return (value == array[low] ? (int)low : -1);
+    int low = 0;
+    int high = size - 1;
+
+    while (low <= high && value >= array[low] && value <= array[high]) {
+        // Calculate the probe position using interpolation formula
+        size_t pos = low + (((double)(high - low) / (array[high] - array[low])) * (value - array[low]));
+
+        if (array[pos] == value) {
+            // Check if this is the first occurrence of the value
+            while (pos > 0 && array[pos - 1] == value) {
+                pos--;
+            }
+            return pos;  // Value found
+        } else if (array[pos] < value) {
+            low = pos + 1;
+        } else {
+            high = pos - 1;
+        }
+    }
+
+    return -1;  // Value not found
+}
+
+int main() {
+    int array[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    size_t size = sizeof(array) / sizeof(array[0]);
+    int value = 6;
+    int result = interpolation_search(array, size, value);
+
+    if (result != -1) {
+        printf("Value %d found at index %d\n", value, result);
+    } else {
+        printf("Value %d not found in the array\n", value);
+    }
+
+    return 0;
 }
